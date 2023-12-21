@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/LyudmilaBystrova/list/static/css/main.ea26e90c.css",
+    "main.js": "/LyudmilaBystrova/list/static/js/main.8803147f.js",
+    "index.html": "/LyudmilaBystrova/list/index.html",
+    "main.ea26e90c.css.map": "/LyudmilaBystrova/list/static/css/main.ea26e90c.css.map",
+    "main.8803147f.js.map": "/LyudmilaBystrova/list/static/js/main.8803147f.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ea26e90c.css",
+    "static/js/main.8803147f.js"
+  ]
+}
