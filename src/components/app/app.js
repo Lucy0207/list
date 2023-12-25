@@ -1,10 +1,8 @@
 import React from 'react';
 
-
 import Header from "../header/header";
-import Main from "../main/main";
 import Footer from "../footer/footer";
-
+import TaskList from "../task-list/task-list";
 import "./app.css";
 
 const App = () => {
@@ -12,8 +10,12 @@ const App = () => {
     return (
         <section className="todoapp">
             <Header />
-            <Main />
-            <Footer />
+            <section className="main">
+                <TaskList />
+                <Footer />
+            </section>
+
+
         </section>
     );
 };
