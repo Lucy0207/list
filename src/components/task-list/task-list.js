@@ -1,19 +1,22 @@
-import "./task-list.css";
-
 import React from 'react';
+
 import Task from "../task/task";
 
-const TaskList = () => {
+import "./task-list.css";
 
+const TaskList = ({todos}) => {
+    const elements = todos.map((item) => {
+        const {id, ...itemProps} = item;
+        return (
+            <li key={id} className={itemProps.completed ? "completed" : itemProps.editing ? "editing" : ""}>
+                <Task {...itemProps}/>
+            </li>
+        )
+    })
     return (
+        <ul className="todo-list">{elements}</ul>
+    )
 
-            <ul className="todo-list">
-                <Task completed={true} description="Completed task" created="created 17 seconds ago" />
-                <Task editing={true} description="Editing task" created="created 5 minutes ago" />
-                <Task description="Active task" created="created 5 minutes ago" />
-            </ul>
-
-    );
 };
 
 export default TaskList;
