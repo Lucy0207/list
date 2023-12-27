@@ -1,21 +1,24 @@
 import "./task.css";
 
 import React from 'react';
-// completed, editing, description, created
+
 export default class Task extends React.Component {
 
     render() {
         const {description, created, editing} = this.props;
         return (
             <>
-                <div className="view">
-                    <input className="toggle" type="checkbox" />
-                    <label>
+                <div className="view" >
+                    <input className="toggle" type="checkbox" defaultChecked={this.props.completed} onChange={this.props.onLabelClick}/>
+                    <label >
                         <span className="description">{description}</span>
                         <span className="created">{created}</span>
                     </label>
                     <button className="icon icon-edit"></button>
-                    <button className="icon icon-destroy"></button>
+                    <button
+                        className="icon icon-destroy"
+                        onClick={this.props.onDeleted}
+                    ></button>
                 </div>
                 {editing && <input type="text" className="edit" value={description} />}
             </>
