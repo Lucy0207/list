@@ -5,11 +5,11 @@ import React from 'react';
 export default class Task extends React.Component {
 
     render() {
-        const {description, created, editing} = this.props;
+        const {description, created, editing, onToggleCompleted} = this.props;
         return (
             <>
                 <div className="view" >
-                    <input className="toggle" type="checkbox" defaultChecked={this.props.completed} onChange={this.props.onLabelClick}/>
+                    <input className="toggle" type="checkbox" defaultChecked={this.props.completed} onChange={this.props.onToggleCompleted}/>
                     <label >
                         <span className="description">{description}</span>
                         <span className="created">{created}</span>

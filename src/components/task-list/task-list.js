@@ -21,18 +21,19 @@ export default class TaskList extends React.Component {
         }
     }
 
-     onLabelClick(id) {
+  /*   onLabelClick(id) {
         const index = this.state.toDoItems.map(item => item.id).indexOf(id);
        this.setState(state => {
            let {toDoItems} = state;
-           toDoItems[index].completed = !toDoItems[index].completed;
+           toDoItems[index].completed = !toDoItems[index].completed;//плохой код, потому что здесь принудительно вручную меняется state. Переделать
            return {toDoItems: [...toDoItems]};
        })
-    }
+    }*/
+
     render() {
 
         const {toDoItems} = this.state;
-        const {onDeleted} = this.props;
+        const {onDeleted, onToggleCompleted} = this.props;
         const finalTasks = toDoItems.map(item => {
             const {id, ...itemProps} = item;
             let classNames = "";
@@ -47,8 +48,10 @@ export default class TaskList extends React.Component {
             return (
                 <li key={id} className={classNames}>
                     <Task {...itemProps}
-                          onLabelClick={() => this.onLabelClick(id)}
-                          onDeleted={() => onDeleted(id)}/>
+
+                          onDeleted={() => onDeleted(id)}
+                          onToggleCompleted={() => onToggleCompleted(id)}
+                    />
                 </li>
             )
         })

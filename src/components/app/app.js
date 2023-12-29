@@ -7,12 +7,24 @@ import "./app.css";
 
 export default  class App extends React.Component{
 
+    maxId = 100;
+
+    createToDoItem = (description, created) => {
+        return {
+            description,
+            created,
+            completed: false,
+            editing: false,
+            id: this.maxId++
+        }
+    }
+
     state = {
         todoData: [
-            {description: "Completed task", created: "created 17 seconds ago", completed: true, editing: false, id: 1},
-            {description: "Editing task", created: "created 5 minutes ago", completed: false, editing: true, id: 2},
-            {description: "Active task", created: "created 5 minutes ago", completed: false, editing: false, id: 3},
-        ]
+            this.createToDoItem("Completed task", "created 17 seconds ago" ),
+            this.createToDoItem("Editing task", "created 5 minutes ago"),
+            this.createToDoItem("Active task", "created 5 minutes ago"),
+            ]
     }
 
     deleteItem = (id) => {
@@ -31,14 +43,39 @@ export default  class App extends React.Component{
         })
     }
 
+
+
+    addItem = (text, time) => {
+        const newItem = this.createToDoItem(text, time);
+        this.setState(({ todoData }) => {
+            const newArr = [...todoData, newItem];
+            return {
+                todoData: newArr
+            }
+        })
+    }
+
+    onToggleCompleted = (id) => {
+        this.setState(({ todoData }) => {
+            const index = todoData.findIndex((el) => el.id === id);
+            const oldItem = todoData[index];
+            const newItem = {...oldItem, completed: !oldItem.completed}
+            const newArray = [...todoData.slice(0, index), newItem, ...todoData.slice(index + 1)];
+            return {
+                todoData: newArray
+            }
+        })
+    }
+
     render() {
         return (
             <section className="todoapp">
-                <Header />
+                <Header onItemAdded={this.addItem} />
                 <section className="main">
                     <TaskList
                         todos={this.state.todoData}
                         onDeleted={this.deleteItem}
+                        onToggleCompleted={this.onToggleCompleted}
                     />
                     <Footer />
                 </section>
