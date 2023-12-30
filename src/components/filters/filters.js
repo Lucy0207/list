@@ -2,17 +2,20 @@ import "./filters.css";
 
 import React from 'react';
 
-const Filters = () => {
+const Filters = ( {setFilter} ) => {
     return (
         <ul className="filters">
             <li>
-                <button className="selected">All</button>
+                <button
+                    className="selected"
+                    onClick={() => setFilter("all")}
+                >All</button>
             </li>
             <li>
-                <button>Active</button>
+                <button onClick={() => setFilter("active")}>Active</button>
             </li>
             <li>
-                <button>Completed</button>
+                <button onClick={() => setFilter("completed")}>Completed</button>
             </li>
         </ul>
     );

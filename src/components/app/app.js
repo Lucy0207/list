@@ -24,7 +24,12 @@ export default  class App extends React.Component{
             this.createToDoItem("Completed task", "created 17 seconds ago" ),
             this.createToDoItem("Editing task", "created 5 minutes ago"),
             this.createToDoItem("Active task", "created 5 minutes ago"),
-            ]
+            ],
+        filter: "all"
+    }
+
+    setFilter = (filter) => {
+        this.setState({filter});
     }
 
     deleteItem = (id) => {
@@ -76,8 +81,9 @@ export default  class App extends React.Component{
                         todos={this.state.todoData}
                         onDeleted={this.deleteItem}
                         onToggleCompleted={this.onToggleCompleted}
+                        filter={this.state.filter}
                     />
-                    <Footer />
+                    <Footer setFilter={this.setFilter} />
                 </section>
 
 

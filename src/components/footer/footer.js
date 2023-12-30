@@ -3,11 +3,11 @@ import "./footer.css";
 import React from 'react';
 import Filters from "../filters/filters";
 
-const Footer = () => {
+const Footer = ({setFilter}) => {
     return (
         <footer className="footer">
             <span className="todo-count">1 items left</span>
-            <Filters />
+            <Filters setFilter={setFilter} />
             <button className="clear-completed">Clear completed</button>
         </footer>
     );

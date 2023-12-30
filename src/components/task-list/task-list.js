@@ -21,20 +21,24 @@ export default class TaskList extends React.Component {
         }
     }
 
-  /*   onLabelClick(id) {
-        const index = this.state.toDoItems.map(item => item.id).indexOf(id);
-       this.setState(state => {
-           let {toDoItems} = state;
-           toDoItems[index].completed = !toDoItems[index].completed;//плохой код, потому что здесь принудительно вручную меняется state. Переделать
-           return {toDoItems: [...toDoItems]};
-       })
-    }*/
+    filterTasks = (todoItems, filter) => {
+        switch (filter) {
+            case 'active':
+                return todoItems.filter((todo) => !todo.completed);
+            case 'completed':
+                return todoItems.filter((todo) => todo.completed);
+            default:
+                return todoItems;
+        }
+    };
+
 
     render() {
 
         const {toDoItems} = this.state;
-        const {onDeleted, onToggleCompleted} = this.props;
-        const finalTasks = toDoItems.map(item => {
+        const {onDeleted, onToggleCompleted, filter} = this.props;
+        const filteredList = this.filterTasks(toDoItems, filter);
+        const finalTasks = filteredList.map(item => {
             const {id, ...itemProps} = item;
             let classNames = "";
 
@@ -59,30 +63,12 @@ export default class TaskList extends React.Component {
         return (
             <ul className="todo-list">{finalTasks}</ul>
         )
-    }
+
+        }
+
+}
 
 
 
-};
-/*const elements = this.props.todos.map((item) => {
 
-    const {id, ...itemProps} = item;
-    let classNames = "";
 
-    if (item.editing) {
-        classNames = "editing";
-
-    } else if (item.completed) {
-        classNames = "completed";
-    }
-
-    return (
-        <li key={id} className={classNames}>
-            <Task {...itemProps}
-                  onLabelClick={() => this.onLabelClick(id)}/>
-        </li>
-    )
-})
-return (
-    <ul className="todo-list">{elements}</ul>
-)*/
