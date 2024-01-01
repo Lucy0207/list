@@ -83,7 +83,10 @@ export default  class App extends React.Component{
                         onToggleCompleted={this.onToggleCompleted}
                         filter={this.state.filter}
                     />
-                    <Footer setFilter={this.setFilter} />
+                    <Footer
+                        setFilter={this.setFilter}
+                        todos={this.state.todoData}
+                    />
                 </section>
 
 
