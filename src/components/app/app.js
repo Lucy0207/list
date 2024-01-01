@@ -48,6 +48,14 @@ export default  class App extends React.Component{
         })
     }
 
+    clearComplete = () => {
+        this.setState(({todoData}) => {
+            const completed = todoData.filter((el => !el.completed));
+            return {
+                todoData: completed
+            }
+        } )
+    }
 
 
     addItem = (text, time) => {
@@ -86,6 +94,7 @@ export default  class App extends React.Component{
                     <Footer
                         setFilter={this.setFilter}
                         todos={this.state.todoData}
+                        onClearComplete={this.clearComplete}
                     />
                 </section>
 
