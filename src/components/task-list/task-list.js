@@ -55,6 +55,8 @@ export default class TaskList extends React.Component {
 
                           onDeleted={() => onDeleted(id)}
                           onToggleCompleted={() => onToggleCompleted(id)}
+
+
                     />
                 </li>
             )

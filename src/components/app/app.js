@@ -3,16 +3,19 @@ import React from 'react';
 import Header from "../header/header";
 import Footer from "../footer/footer";
 import TaskList from "../task-list/task-list";
+
+
 import "./app.css";
 
 export default  class App extends React.Component{
 
     maxId = 100;
 
-    createToDoItem = (description, created) => {
+
+    createToDoItem = (description) => {
         return {
             description,
-            created,
+            date: new Date(),
             completed: false,
             editing: false,
             id: this.maxId++
@@ -21,9 +24,9 @@ export default  class App extends React.Component{
 
     state = {
         todoData: [
-            this.createToDoItem("Completed task", "created 17 seconds ago" ),
-            this.createToDoItem("Editing task", "created 5 minutes ago"),
-            this.createToDoItem("Active task", "created 5 minutes ago"),
+            this.createToDoItem("Completed task"),
+            this.createToDoItem("Editing task"),
+            this.createToDoItem("Active task"),
             ],
         filter: "all"
     }
@@ -58,8 +61,8 @@ export default  class App extends React.Component{
     }
 
 
-    addItem = (text, time) => {
-        const newItem = this.createToDoItem(text, time);
+    addItem = (text) => {
+        const newItem = this.createToDoItem(text);
         this.setState(({ todoData }) => {
             const newArr = [...todoData, newItem];
             return {
@@ -90,6 +93,7 @@ export default  class App extends React.Component{
                         onDeleted={this.deleteItem}
                         onToggleCompleted={this.onToggleCompleted}
                         filter={this.state.filter}
+
                     />
                     <Footer
                         setFilter={this.setFilter}
