@@ -23,7 +23,8 @@
     "deploy": "gh-pages -d build",
     "lint": "eslint .",
     "lint:fix": "eslint src --fix",
-    "format": "prettier --write src"
+    "format": "prettier --write src",
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": [
@@ -63,10 +64,9 @@
     }
   },
   "lint-staged": {
-    "*.js": [
-      "npm run lint",
-      "npm run lint:fix",
-      "npm run format",
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write",
       "git add"
     ]
   }
