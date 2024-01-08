@@ -2,9 +2,12 @@ import "./task.css";
 
 import React from 'react';
 
-import { formatDistanceToNow } from 'date-fns'
+import { formatDistanceToNow } from 'date-fns';
+import PropTypes from "prop-types";
 
 export default class Task extends React.Component {
+
+
 
     render() {
         const {description, editing, onToggleCompleted, date} = this.props;
@@ -32,3 +35,8 @@ export default class Task extends React.Component {
 
 };
 
+Task.propTypes = {
+    description: PropTypes.string,
+    date: PropTypes.instanceOf(Date),
+
+}

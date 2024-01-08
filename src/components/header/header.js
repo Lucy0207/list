@@ -2,6 +2,7 @@ import React from 'react';
 
 import "./header.css";
 
+
 export default class Header extends React.Component {
 
     state = {
@@ -26,6 +27,7 @@ export default class Header extends React.Component {
         return (
             <header className="header">
                 <h1>todos</h1>
+                console.log("hello");
                 <form onSubmit={this.onSubmit}>
                     <input className="new-todo"
                            placeholder="What needs to be done?"

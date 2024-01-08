@@ -2,6 +2,7 @@ import "./footer.css";
 
 import React from 'react';
 import Filters from "../filters/filters";
+import PropTypes from "prop-types";
 
 export default class Footer extends React.Component {
 
@@ -35,3 +36,13 @@ export default class Footer extends React.Component {
 
 };
 
+Footer.propTypes = {
+    toDoCount: PropTypes.number,
+    onClearComplete: PropTypes.func.isRequired,
+    setFilter: PropTypes.func.isRequired
+}
+
+Footer.defaultProps = {
+    toDoCount: 0,
+    filter: 'All',
+};

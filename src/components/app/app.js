@@ -23,12 +23,7 @@ export default  class App extends React.Component{
     }
 
     state = {
-        todoData: [
-            this.createToDoItem("Completed task"),
-            this.createToDoItem("Editing task"),
-            this.createToDoItem("Active task"),
-            ],
-        filter: "all"
+        todoData: []
     }
 
     setFilter = (filter) => {
@@ -62,13 +57,16 @@ export default  class App extends React.Component{
 
 
     addItem = (text) => {
-        const newItem = this.createToDoItem(text);
-        this.setState(({ todoData }) => {
-            const newArr = [...todoData, newItem];
-            return {
-                todoData: newArr
-            }
-        })
+        if(text.trim() !== "") {
+            const newItem = this.createToDoItem(text);
+            this.setState(({ todoData }) => {
+                const newArr = [...todoData, newItem];
+                return {
+                    todoData: newArr
+                }
+            })
+        }
+
     }
 
     onToggleCompleted = (id) => {
