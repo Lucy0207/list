@@ -1,46 +1,45 @@
-import React from 'react';
+import React from "react";
+import PropTypes from "prop-types";
 
 import "./header.css";
 
-
 export default class Header extends React.Component {
+  state = {
+    description: "",
+  };
 
-    state = {
-        description: ""
-    }
+  onLabelChange = (e) => {
+    this.setState({
+      description: e.target.value,
+    });
+  };
 
-    onLabelChange = (e) => {
-        this.setState({
-            description: e.target.value
-        })
-    }
+  onSubmit = (e) => {
+    e.preventDefault();
+    this.props.onItemAdded(this.state.description);
+    this.setState({
+      description: "",
+    });
+  };
 
-    onSubmit = (e) => {
-        e.preventDefault();
-        this.props.onItemAdded(this.state.description);
-        this.setState({
-            description: ""
-        })
-    }
+  render() {
+    return (
+      <header className="header">
+        <h1>todos</h1>
+        <form onSubmit={this.onSubmit}>
+          <input
+            className="new-todo"
+            placeholder="What needs to be done?"
+            onChange={this.onLabelChange}
+            value={this.state.description}
+            autoFocus
+          />
+        </form>
+      </header>
+    );
+  }
+}
 
-    render() {
-        return (
-            <header className="header">
-                <h1>todos</h1>
-                console.log("hello");
-                <form onSubmit={this.onSubmit}>
-                    <input className="new-todo"
-                           placeholder="What needs to be done?"
-                           onChange={this.onLabelChange}
-                           value={this.state.description}
-                           autoFocus />
-                </form>
-
-            </header>
-
-        );
-    }
-
-
-};
-
+Header.propTypes = {
+  onItemAdded: PropTypes.func.isRequired
+}
