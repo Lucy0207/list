@@ -41,5 +41,5 @@ export default class Header extends React.Component {
 }
 
 Header.propTypes = {
-  onItemAdded: PropTypes.func.isRequired
+  onItemAdded: PropTypes.func
 }

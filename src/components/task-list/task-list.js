@@ -61,7 +61,7 @@ export default class TaskList extends React.Component {
 }
 
 TaskList.propTypes = {
-  todos: {},
+  todos: PropTypes.arrayOf(PropTypes.object).isRequired,
   onDeleted: PropTypes.func.isRequired,
   onToggleCompleted: PropTypes.func.isRequired,
   filter: PropTypes.string

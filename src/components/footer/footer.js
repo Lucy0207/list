@@ -39,7 +39,8 @@ Footer.propTypes = {
   toDoCount: PropTypes.number,
   onClearComplete: PropTypes.func.isRequired,
   setFilter: PropTypes.func.isRequired,
-  todos: {}
+  todos: PropTypes.arrayOf(PropTypes.object).isRequired,
+  filter: PropTypes.string
 };
 
 Footer.defaultProps = {
