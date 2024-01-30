@@ -75,7 +75,7 @@
   color: gray;
 }
 
-.todo-list li label .description {
+/*.todo-list li label .description {
   word-break: break-all;
   display: block;
   line-height: 1.2;
@@ -87,7 +87,7 @@
 .todo-list li.completed label .description {
   color: #cdcdcd;
   text-decoration: line-through;
-}
+}*/
 
 .todo-list li .icon {
   position: absolute;

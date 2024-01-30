@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/LyudmilaBystrova/list/static/css/main.ea26e90c.css",
-    "main.js": "/LyudmilaBystrova/list/static/js/main.8803147f.js",
+    "main.css": "/LyudmilaBystrova/list/static/css/main.88006225.css",
+    "main.js": "/LyudmilaBystrova/list/static/js/main.0c7f24ef.js",
     "index.html": "/LyudmilaBystrova/list/index.html",
-    "main.ea26e90c.css.map": "/LyudmilaBystrova/list/static/css/main.ea26e90c.css.map",
-    "main.8803147f.js.map": "/LyudmilaBystrova/list/static/js/main.8803147f.js.map"
+    "main.88006225.css.map": "/LyudmilaBystrova/list/static/css/main.88006225.css.map",
+    "main.0c7f24ef.js.map": "/LyudmilaBystrova/list/static/js/main.0c7f24ef.js.map"
   },
   "entrypoints": [
-    "static/css/main.ea26e90c.css",
-    "static/js/main.8803147f.js"
+    "static/css/main.88006225.css",
+    "static/js/main.0c7f24ef.js"
   ]
 }

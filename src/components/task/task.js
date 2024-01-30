@@ -18,7 +18,12 @@ export default class Task extends React.Component {
             onChange={onToggleCompleted}
           />
           <label>
-            <span className="description">{description}</span>
+            <span className="title">{description}</span>
+            <span className="description">
+                  <button className="icon icon-play"></button>
+                  <button className="icon icon-pause"></button>
+                  12:25
+                </span>
             <span className="created">
               {" "}
               {`created ${formatDistanceToNow(date, {

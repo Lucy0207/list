@@ -26,7 +26,9 @@ export default class Header extends React.Component {
     return (
       <header className="header">
         <h1>todos</h1>
-        <form onSubmit={this.onSubmit}>
+        <form
+            className="new-todo-form"
+            onSubmit={this.onSubmit}>
           <input
             className="new-todo"
             placeholder="What needs to be done?"
@@ -34,6 +36,8 @@ export default class Header extends React.Component {
             value={this.state.description}
             autoFocus
           />
+          <input className="new-todo-form__timer" placeholder="Min" autoFocus />
+          <input className="new-todo-form__timer" placeholder="Sec" autoFocus />
         </form>
       </header>
     );
