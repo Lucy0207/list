@@ -6,6 +6,8 @@ import "./header.css";
 export default class Header extends React.Component {
   state = {
     description: "",
+    timeMin: "",
+    timeSec: ""
   };
 
   onLabelChange = (e) => {
@@ -14,12 +16,26 @@ export default class Header extends React.Component {
     });
   };
 
+  onTimeMinChange = (e) => {
+    this.setState({
+      timeMin: e.target.value,
+    });
+  };
+  onTimeSecChange = (e) => {
+    this.setState({
+      timeSec: e.target.value,
+    });
+  };
+
   onSubmit = (e) => {
     e.preventDefault();
-    this.props.onItemAdded(this.state.description);
+    this.props.onItemAdded(this.state.description, this.state.timeMin, this.state.timeSec);
     this.setState({
       description: "",
+      timeMin: "",
+      timeSec: ""
     });
+
   };
 
   render() {
@@ -36,8 +52,19 @@ export default class Header extends React.Component {
             value={this.state.description}
             autoFocus
           />
-          <input className="new-todo-form__timer" placeholder="Min" autoFocus />
-          <input className="new-todo-form__timer" placeholder="Sec" autoFocus />
+          <input
+              className="new-todo-form__timer"
+              placeholder="Min"
+              autoFocus
+              onChange={this.onTimeMinChange}
+              value={this.state.timeMin} />
+          <input
+              className="new-todo-form__timer"
+              placeholder="Sec"
+              onChange={this.onTimeSecChange}
+              value={this.state.timeSec}
+          />
+          <button style={{ display: "none" }} type="submit"></button>
         </form>
       </header>
     );

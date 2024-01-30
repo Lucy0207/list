@@ -9,9 +9,11 @@ import "./app.css";
 export default class App extends React.Component {
   maxId = 100;
 
-  createToDoItem = (description) => {
+  createToDoItem = (description, timeMin, timeSec) => {
     return {
       description,
+      timeMin,
+      timeSec,
       date: new Date(),
       completed: false,
       editing: false,
@@ -51,9 +53,9 @@ export default class App extends React.Component {
     });
   };
 
-  addItem = (text) => {
+  addItem = (text, timeMin, timeSec) => {
     if (text.trim() !== "") {
-      const newItem = this.createToDoItem(text);
+      const newItem = this.createToDoItem(text, timeMin, timeSec);
       this.setState(({ todoData }) => {
         const newArr = [...todoData, newItem];
         return {
