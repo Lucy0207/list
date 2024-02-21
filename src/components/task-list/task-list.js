@@ -8,6 +8,8 @@ import PropTypes from "prop-types";
 export default class TaskList extends React.Component {
   state = {
     toDoItems: this.props.todos,
+
+
   };
 
   componentDidMount() {
@@ -31,6 +33,8 @@ export default class TaskList extends React.Component {
     }
   };
 
+
+
   render() {
     const { toDoItems } = this.state;
     const { onDeleted, onToggleCompleted, filter } = this.props;
@@ -46,14 +50,12 @@ export default class TaskList extends React.Component {
       }
 
       return (
-        <li key={id} className={classNames}>
-          <Task
-            {...itemProps}
-            onDeleted={() => onDeleted(id)}
-            onToggleCompleted={() => onToggleCompleted(id)}
-          />
-        </li>
-      );
+          <li key={id} className={classNames}>
+            <Task            {...itemProps}
+                             onDeleted={() => onDeleted(id)}
+                             onToggleCompleted={() => onToggleCompleted(id)}
+            />
+          </li>      );
     });
 
     return <ul className="todo-list">{finalTasks}</ul>;

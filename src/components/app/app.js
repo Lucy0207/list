@@ -83,23 +83,19 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <section className="todoapp">
-        <Header onItemAdded={this.addItem} />
-        <section className="main">
-          <TaskList
-            todos={this.state.todoData}
-            onDeleted={this.deleteItem}
-            onToggleCompleted={this.onToggleCompleted}
-            filter={this.state.filter}
-          />
-          <Footer
-            setFilter={this.setFilter}
-            filter={this.state.filter}
-            todos={this.state.todoData}
-            onClearComplete={this.clearComplete}
-          />
-        </section>
-      </section>
-    )
+        <section className="todoapp">
+          <Header onItemAdded={this.addItem} />
+          <section className="main">
+            <TaskList            todos={this.state.todoData}
+                                 onDeleted={this.deleteItem}
+                                 onToggleCompleted={this.onToggleCompleted}
+                                 filter={this.state.filter}
+            />
+            <Footer            setFilter={this.setFilter}
+                               filter={this.state.filter}
+                               todos={this.state.todoData}
+                               onClearComplete={this.clearComplete}
+            />
+          </section>      </section>    )
   }
 }

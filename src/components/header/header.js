@@ -54,12 +54,13 @@ export default class Header extends React.Component {
           />
           <input
               className="new-todo-form__timer"
+              type="number"
               placeholder="Min"
-              autoFocus
               onChange={this.onTimeMinChange}
               value={this.state.timeMin} />
           <input
               className="new-todo-form__timer"
+              type="number"
               placeholder="Sec"
               onChange={this.onTimeSecChange}
               value={this.state.timeSec}
