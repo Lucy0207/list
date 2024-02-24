@@ -11,9 +11,9 @@ export default class App extends React.Component {
   state = {
     todoData: [],
     newTodo: "",
-    newTodoMin: '',
-    newTodoSec: '',
-    filter: "All"
+    newTodoMin: "",
+    newTodoSec: "",
+    filter: "All",
   };
 
   handleNewTodoChange = (event) => {
@@ -29,7 +29,6 @@ export default class App extends React.Component {
   };
 
   handleNewTodoKeyDown = (event) => {
-    // if (event.key !== 'Enter') return;
     event.preventDefault();
 
     const title = this.state.newTodo.trim();
@@ -37,19 +36,26 @@ export default class App extends React.Component {
     const seconds = parseInt(this.state.newTodoSec, 10) || 0;
 
     if (title) {
-      const newTodo = { title, completed: false, editing: false, timer: { minutes, seconds }, date: new Date(), isRunning: false, id: this.maxId++ };
+      const newTodo = {
+        title,
+        completed: false,
+        editing: false,
+        timer: { minutes, seconds },
+        date: new Date(),
+        isRunning: false,
+        id: this.maxId++,
+      };
       this.setState({
         todoData: [...this.state.todoData, newTodo],
-        newTodo: '',
-        newTodoMin: '',
-        newTodoSec: ''
+        newTodo: "",
+        newTodoMin: "",
+        newTodoSec: "",
       });
     }
   };
 
   setFilter = (filter) => {
     this.setState({ filter });
-
   };
 
   deleteItem = (index) => {
@@ -69,10 +75,9 @@ export default class App extends React.Component {
     const updatedTodos = [...this.state.todoData];
     updatedTodos[index].completed = !updatedTodos[index].completed;
     if (updatedTodos[index].completed) {
-      clearInterval(updatedTodos[index].timerInterval)
+      clearInterval(updatedTodos[index].timerInterval);
     }
     this.setState({ todoData: updatedTodos });
-
   };
 
   startTimer = (index) => {
@@ -113,31 +118,35 @@ export default class App extends React.Component {
   render() {
     const { todoData, newTodo, newTodoMin, newTodoSec, filter } = this.state;
     return (
-        <section className="todoapp">
-          <Header
-              newTodo={newTodo}
-              newTodoMin={newTodoMin}
-              newTodoSec={newTodoSec}
-              onNewTodoChange={this.handleNewTodoChange}
-              onNewTodoMinChange={this.handleNewTodoMinChange}
-              onNewTodoSecChange={this.handleNewTodoSecChange}
-              onNewTodoKeyDown={this.handleNewTodoKeyDown}
+      <section className="todoapp">
+        <Header
+          newTodo={newTodo}
+          newTodoMin={newTodoMin}
+          newTodoSec={newTodoSec}
+          onNewTodoChange={this.handleNewTodoChange}
+          onNewTodoMinChange={this.handleNewTodoMinChange}
+          onNewTodoSecChange={this.handleNewTodoSecChange}
+          onNewTodoKeyDown={this.handleNewTodoKeyDown}
+        />
+        <section className="main">
+          <TaskList
+            todos={todoData}
+            onDeleted={this.deleteItem}
+            onToggleCompleted={this.onToggleCompleted}
+            startTimer={this.startTimer}
+            pauseTimer={this.pauseTimer}
+            clearCompleted={this.clearComplete}
+            setFilter={this.setFilter}
+            filter={filter}
           />
-          <section className="main">
-            <TaskList            todos={todoData}
-                                 onDeleted={this.deleteItem}
-                                 onToggleCompleted={this.onToggleCompleted}
-                                 startTimer={this.startTimer}
-                                 pauseTimer={this.pauseTimer}
-                                 clearCompleted={this.clearComplete}
-                                 setFilter={this.setFilter}
-                                 filter={filter}
-            />
-            <Footer            setFilter={this.setFilter}
-                               filter={filter}
-                               todos={todoData}
-                               onClearComplete={this.clearComplete}
-            />
-          </section>      </section>    )
+          <Footer
+            setFilter={this.setFilter}
+            filter={filter}
+            todos={todoData}
+            onClearComplete={this.clearComplete}
+          />
+        </section>{" "}
+      </section>
+    );
   }
 }

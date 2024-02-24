@@ -70,8 +70,6 @@
   padding: 15px 85px 15px 60px;
 }
 
-
-
 /*.todo-list li label .description {
   word-break: break-all;
   display: block;
@@ -108,9 +106,8 @@
 }
 
 .todo-list li .icon-destroy:after {
-  content: '×';
+  content: "×";
 }
-
 
 .todo-list li .icon-edit {
   position: absolute;
@@ -121,7 +118,7 @@
 }
 
 .todo-list li .icon-edit:after {
-  content: '✎';
+  content: "✎";
 }
 
 .todo-list li .icon-pause,
@@ -136,11 +133,11 @@
 }
 
 .icon-pause:after {
-  content: '⏸';
+  content: "⏸";
 }
 
 .icon-play:after {
-  content: '▶';
+  content: "▶";
 }
 .todo-list li .edit {
   display: none;

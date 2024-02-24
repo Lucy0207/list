@@ -4,8 +4,6 @@ import PropTypes from "prop-types";
 import "./header.css";
 
 export default class Header extends React.Component {
-
-
   render() {
     const {
       newTodo,
@@ -14,16 +12,12 @@ export default class Header extends React.Component {
       onNewTodoChange,
       onNewTodoMinChange,
       onNewTodoSecChange,
-      onNewTodoKeyDown
+      onNewTodoKeyDown,
     } = this.props;
     return (
       <header className="header">
         <h1>todos</h1>
-        <form
-            onSubmit={onNewTodoKeyDown}
-            className="new-todo-form"
-
-            >
+        <form onSubmit={onNewTodoKeyDown} className="new-todo-form">
           <input
             className="new-todo"
             placeholder="What needs to be done?"
@@ -32,17 +26,18 @@ export default class Header extends React.Component {
             autoFocus
           />
           <input
-              className="new-todo-form__timer"
-              type="number"
-              placeholder="Min"
-              value={newTodoMin}
-              onChange={onNewTodoMinChange} />
+            className="new-todo-form__timer"
+            type="number"
+            placeholder="Min"
+            value={newTodoMin}
+            onChange={onNewTodoMinChange}
+          />
           <input
-              className="new-todo-form__timer"
-              type="number"
-              placeholder="Sec"
-              value={newTodoSec}
-              onChange={onNewTodoSecChange}
+            className="new-todo-form__timer"
+            type="number"
+            placeholder="Sec"
+            value={newTodoSec}
+            onChange={onNewTodoSecChange}
           />
           <button style={{ display: "none" }} type="submit"></button>
         </form>
@@ -58,5 +53,5 @@ Header.propTypes = {
   onNewTodoChange: PropTypes.func.isRequired,
   onNewTodoMinChange: PropTypes.func.isRequired,
   onNewTodoSecChange: PropTypes.func.isRequired,
-  onNewTodoKeyDown: PropTypes.func.isRequired
-}
+  onNewTodoKeyDown: PropTypes.func.isRequired,
+};

@@ -6,8 +6,6 @@ import "./task-list.css";
 import PropTypes from "prop-types";
 
 export default class TaskList extends React.Component {
-
-
   componentDidMount() {
     this.setState({ toDoItems: this.props.todos });
   }
@@ -18,9 +16,6 @@ export default class TaskList extends React.Component {
     }
   }
 
-
-
-
   render() {
     const {
       todos,
@@ -29,22 +24,18 @@ export default class TaskList extends React.Component {
       onDeleted,
       startTimer,
       pauseTimer,
-        } = this.props;
+    } = this.props;
 
-
-
-
-    const filteredList = todos.filter(todo => {
-      if (filter === 'active') {
+    const filteredList = todos.filter((todo) => {
+      if (filter === "active") {
         return !todo.completed;
-      } else if (filter === 'completed') {
+      } else if (filter === "completed") {
         return todo.completed;
       } else {
         return true;
       }
     });
     const finalTasks = filteredList.map((item, id) => {
-
       let classNames = "";
 
       if (item.editing) {
@@ -54,15 +45,16 @@ export default class TaskList extends React.Component {
       }
 
       return (
-          <li key={id} className={classNames}>
-            <Task
-                todo={item}
-                onDeleted={() => onDeleted(id)}
-                onToggleCompleted={() => onToggleCompleted(id)}
-                startTimer={() => startTimer(id)}
-                pauseTimer={() => pauseTimer(id)}
-            />
-          </li>      );
+        <li key={id} className={classNames}>
+          <Task
+            todo={item}
+            onDeleted={() => onDeleted(id)}
+            onToggleCompleted={() => onToggleCompleted(id)}
+            startTimer={() => startTimer(id)}
+            pauseTimer={() => pauseTimer(id)}
+          />
+        </li>
+      );
     });
 
     return <ul className="todo-list">{finalTasks}</ul>;
@@ -75,5 +67,5 @@ TaskList.propTypes = {
   onToggleCompleted: PropTypes.func.isRequired,
   filter: PropTypes.string,
   startTimer: PropTypes.func.isRequired,
-  pauseTimer: PropTypes.func.isRequired
-}
+  pauseTimer: PropTypes.func.isRequired,
+};

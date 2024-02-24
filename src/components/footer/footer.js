@@ -25,8 +25,7 @@ export default class Footer extends React.Component {
             ? toDoCount + " item left"
             : toDoCount + " items left"}{" "}
         </span>
-        <Filters setFilter={setFilter}
-        filter={filter}/>
+        <Filters setFilter={setFilter} filter={filter} />
         <button className="clear-completed" onClick={onClearComplete}>
           Clear completed
         </button>
@@ -40,7 +39,7 @@ Footer.propTypes = {
   onClearComplete: PropTypes.func.isRequired,
   setFilter: PropTypes.func.isRequired,
   todos: PropTypes.arrayOf(PropTypes.object).isRequired,
-  filter: PropTypes.string
+  filter: PropTypes.string,
 };
 
 Footer.defaultProps = {
