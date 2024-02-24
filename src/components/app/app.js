@@ -8,22 +8,43 @@ import "./app.css";
 
 export default class App extends React.Component {
   maxId = 100;
-
-  createToDoItem = (description, timeMin, timeSec) => {
-    return {
-      description,
-      timeMin,
-      timeSec,
-      date: new Date(),
-      completed: false,
-      editing: false,
-      id: this.maxId++,
-    };
-  };
-
   state = {
     todoData: [],
+    newTodo: "",
+    newTodoMin: '',
+    newTodoSec: '',
     filter: "All"
+  };
+
+  handleNewTodoChange = (event) => {
+    this.setState({ newTodo: event.target.value });
+  };
+
+  handleNewTodoMinChange = (event) => {
+    this.setState({ newTodoMin: event.target.value });
+  };
+
+  handleNewTodoSecChange = (event) => {
+    this.setState({ newTodoSec: event.target.value });
+  };
+
+  handleNewTodoKeyDown = (event) => {
+    // if (event.key !== 'Enter') return;
+    event.preventDefault();
+
+    const title = this.state.newTodo.trim();
+    const minutes = parseInt(this.state.newTodoMin, 10) || 0;
+    const seconds = parseInt(this.state.newTodoSec, 10) || 0;
+
+    if (title) {
+      const newTodo = { title, completed: false, editing: false, timer: { minutes, seconds }, date: new Date(), isRunning: false, id: this.maxId++ };
+      this.setState({
+        todoData: [...this.state.todoData, newTodo],
+        newTodo: '',
+        newTodoMin: '',
+        newTodoSec: ''
+      });
+    }
   };
 
   setFilter = (filter) => {
@@ -31,17 +52,9 @@ export default class App extends React.Component {
 
   };
 
-  deleteItem = (id) => {
-    this.setState(({ todoData }) => {
-      const index = todoData.findIndex((el) => el.id === id);
-      const before = todoData.slice(0, index);
-      const after = todoData.slice(index + 1);
-      const newArray = [...before, ...after];
-
-      return {
-        todoData: newArray,
-      };
-    });
+  deleteItem = (index) => {
+    const updatedTodos = this.state.todoData.filter((_, i) => i !== index);
+    this.setState({ todoData: updatedTodos });
   };
 
   clearComplete = () => {
@@ -52,48 +65,77 @@ export default class App extends React.Component {
       };
     });
   };
-
-  addItem = (text, timeMin, timeSec) => {
-    if (text.trim() !== "") {
-      const newItem = this.createToDoItem(text, timeMin, timeSec);
-      this.setState(({ todoData }) => {
-        const newArr = [...todoData, newItem];
-        return {
-          todoData: newArr,
-        };
-      });
+  onToggleCompleted = (index) => {
+    const updatedTodos = [...this.state.todoData];
+    updatedTodos[index].completed = !updatedTodos[index].completed;
+    if (updatedTodos[index].completed) {
+      clearInterval(updatedTodos[index].timerInterval)
     }
+    this.setState({ todoData: updatedTodos });
+
   };
 
-  onToggleCompleted = (id) => {
-    this.setState(({ todoData }) => {
-      const index = todoData.findIndex((el) => el.id === id);
-      const oldItem = todoData[index];
-      const newItem = { ...oldItem, completed: !oldItem.completed };
-      const newArray = [
-        ...todoData.slice(0, index),
-        newItem,
-        ...todoData.slice(index + 1),
-      ];
-      return {
-        todoData: newArray,
-      };
-    });
+  startTimer = (index) => {
+    const updatedTodos = [...this.state.todoData];
+    updatedTodos[index].isRunning = true;
+
+    const timerInterval = setInterval(() => {
+      const currentTimer = updatedTodos[index].timer;
+      if (currentTimer.minutes === 0 && currentTimer.seconds === 0) {
+        clearInterval(timerInterval);
+        updatedTodos[index].isRunning = false;
+      } else {
+        let { minutes, seconds } = currentTimer;
+        if (seconds === 0) {
+          minutes -= 1;
+          seconds = 59;
+        } else {
+          seconds -= 1;
+        }
+        updatedTodos[index].timer = { minutes, seconds };
+      }
+
+      this.setState({ todoData: updatedTodos });
+    }, 1000);
+
+    updatedTodos[index].timerInterval = timerInterval;
+
+    this.setState({ todoData: updatedTodos });
+  };
+
+  pauseTimer = (index) => {
+    const updatedTodos = [...this.state.todoData];
+    updatedTodos[index].isRunning = false;
+    clearInterval(updatedTodos[index].timerInterval);
+    this.setState({ todos: updatedTodos });
   };
 
   render() {
+    const { todoData, newTodo, newTodoMin, newTodoSec, filter } = this.state;
     return (
         <section className="todoapp">
-          <Header onItemAdded={this.addItem} />
+          <Header
+              newTodo={newTodo}
+              newTodoMin={newTodoMin}
+              newTodoSec={newTodoSec}
+              onNewTodoChange={this.handleNewTodoChange}
+              onNewTodoMinChange={this.handleNewTodoMinChange}
+              onNewTodoSecChange={this.handleNewTodoSecChange}
+              onNewTodoKeyDown={this.handleNewTodoKeyDown}
+          />
           <section className="main">
-            <TaskList            todos={this.state.todoData}
+            <TaskList            todos={todoData}
                                  onDeleted={this.deleteItem}
                                  onToggleCompleted={this.onToggleCompleted}
-                                 filter={this.state.filter}
+                                 startTimer={this.startTimer}
+                                 pauseTimer={this.pauseTimer}
+                                 clearCompleted={this.clearComplete}
+                                 setFilter={this.setFilter}
+                                 filter={filter}
             />
             <Footer            setFilter={this.setFilter}
-                               filter={this.state.filter}
-                               todos={this.state.todoData}
+                               filter={filter}
+                               todos={todoData}
                                onClearComplete={this.clearComplete}
             />
           </section>      </section>    )

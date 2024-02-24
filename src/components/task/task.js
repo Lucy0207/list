@@ -7,70 +7,32 @@ import PropTypes from "prop-types";
 
 export default class Task extends React.Component {
 
-    state = {
-        timerMinutes: parseInt(this.props.timeMin),
-        timerSeconds: parseInt(this.props.timeSec),
-    }
-
-
-    componentWillUnmount() {
-        clearInterval(this.timer)
-    }
-
-    startTimer = () => {
-
-        this.timer = setInterval(() => {
-
-            const {timerMinutes, timerSeconds} = this.state;
-
-            if(timerMinutes === 0 && timerSeconds === 0) {
-                clearInterval(this.timer);
-            } else if (timerSeconds === 0) {
-                this.setState({
-                    timerMinutes: timerMinutes - 1,
-                    timerSeconds: 59
-                })
-            } else {
-                this.setState({
-                    timerSeconds: timerSeconds - 1
-                })
-            }
-
-        }, 1000)
-    }
-
-
-
-    pauseTimer = () => {
-        clearInterval(this.timer);
-
-    }
 
     render()
     {
-        const {description, editing, onToggleCompleted, date, completed} = this.props;
-        if (completed) {
-            clearInterval(this.timer)
+        const { todo, onToggleCompleted, onDeleted, startTimer, pauseTimer} = this.props;
+        if (todo.completed) {
+            clearInterval(this.timerInterval)
         }
-        const {timerMinutes, timerSeconds} = this.state;
+
         return (
             <>
                 <div className="view">
                     <input
                         className="toggle"
                         type="checkbox"
-                        defaultChecked={this.props.completed}
-                                              onChange={onToggleCompleted}
+                        defaultChecked={todo.completed}
+                        onChange={onToggleCompleted}
                     />
                     <label>
-                        <span className="title">{description}</span>
+                        <span className="title">{todo.title}</span>
                         <span className="description">
-                {timerMinutes}:{timerSeconds < 10 ? `0${timerSeconds}` : timerSeconds}
-                  <button className="icon icon-play" onClick={this.startTimer}></button>
-                  <button className="icon icon-pause" onClick={this.pauseTimer}></button>
+               {`${todo.timer.minutes.toString().padStart(2, '0')}:${todo.timer.seconds.toString().padStart(2, '0')}`}
+                  <button className="icon icon-play" onClick={startTimer}></button>
+                  <button className="icon icon-pause" onClick={pauseTimer}></button>
             </span>                    <span className="description">
               {" "}
-                {`created ${formatDistanceToNow(date, {
+                {`created ${formatDistanceToNow(todo.date, {
                                 includeSeconds: true,
                                 addSuffix: true,
                             })}`}
@@ -78,22 +40,25 @@ export default class Task extends React.Component {
                     </label>
                     <button className="icon icon-edit"></button>
                     <button  className="icon icon-destroy"
-                             onClick={this.props.onDeleted}
+                             onClick={onDeleted}
                     ></button>
                 </div>
-                {editing && <input type="text" className="edit" value={description}/>}
+                {todo.editing && <input type="text" className="edit" value={todo.title}/>}
             </>
         );
     }
 }
 
 Task.propTypes = {
-    description: PropTypes.string,
-    timeMin: PropTypes.string,
-    timeSec: PropTypes.string,
     date: PropTypes.instanceOf(Date),
     editing: PropTypes.bool,
     onToggleCompleted: PropTypes.func.isRequired,
     completed: PropTypes.bool,
-    onDeleted: PropTypes.func.isRequired
+    onDeleted: PropTypes.func.isRequired,
+    todo: PropTypes.object,
+    startTimer: PropTypes.func.isRequired,
+    pauseTimer: PropTypes.func.isRequired,
+
+
+
 };

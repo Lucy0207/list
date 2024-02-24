@@ -6,11 +6,7 @@ import "./task-list.css";
 import PropTypes from "prop-types";
 
 export default class TaskList extends React.Component {
-  state = {
-    toDoItems: this.props.todos,
 
-
-  };
 
   componentDidMount() {
     this.setState({ toDoItems: this.props.todos });
@@ -22,25 +18,33 @@ export default class TaskList extends React.Component {
     }
   }
 
-  filterTasks = (todoItems, filter) => {
-    switch (filter) {
-      case "active":
-        return todoItems.filter((todo) => !todo.completed);
-      case "completed":
-        return todoItems.filter((todo) => todo.completed);
-      default:
-        return todoItems;
-    }
-  };
 
 
 
   render() {
-    const { toDoItems } = this.state;
-    const { onDeleted, onToggleCompleted, filter } = this.props;
-    const filteredList = this.filterTasks(toDoItems, filter);
-    const finalTasks = filteredList.map((item) => {
-      const { id, ...itemProps } = item;
+    const {
+      todos,
+      filter,
+      onToggleCompleted,
+      onDeleted,
+      startTimer,
+      pauseTimer,
+        } = this.props;
+
+
+
+
+    const filteredList = todos.filter(todo => {
+      if (filter === 'active') {
+        return !todo.completed;
+      } else if (filter === 'completed') {
+        return todo.completed;
+      } else {
+        return true;
+      }
+    });
+    const finalTasks = filteredList.map((item, id) => {
+
       let classNames = "";
 
       if (item.editing) {
@@ -51,9 +55,12 @@ export default class TaskList extends React.Component {
 
       return (
           <li key={id} className={classNames}>
-            <Task            {...itemProps}
-                             onDeleted={() => onDeleted(id)}
-                             onToggleCompleted={() => onToggleCompleted(id)}
+            <Task
+                todo={item}
+                onDeleted={() => onDeleted(id)}
+                onToggleCompleted={() => onToggleCompleted(id)}
+                startTimer={() => startTimer(id)}
+                pauseTimer={() => pauseTimer(id)}
             />
           </li>      );
     });
@@ -66,5 +73,7 @@ TaskList.propTypes = {
   todos: PropTypes.arrayOf(PropTypes.object).isRequired,
   onDeleted: PropTypes.func.isRequired,
   onToggleCompleted: PropTypes.func.isRequired,
-  filter: PropTypes.string
+  filter: PropTypes.string,
+  startTimer: PropTypes.func.isRequired,
+  pauseTimer: PropTypes.func.isRequired
 }
