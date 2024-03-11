@@ -16,6 +16,14 @@ export default class App extends React.Component {
     filter: "All",
   };
 
+  componentWillUnmount() {
+    this.state.todoData.forEach(todo => {
+      if(todo.timerInterval) {
+        clearInterval(todo.timerInterval)
+      }
+    })
+  }
+
   handleNewTodoChange = (event) => {
     this.setState({ newTodo: event.target.value });
   };

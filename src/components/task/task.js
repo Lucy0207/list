@@ -11,9 +11,11 @@ export default class Task extends React.Component {
       this.props;
 
 
+
     return (
       <>
         <div className="view">
+
           <input
             className="toggle"
             type="checkbox"
