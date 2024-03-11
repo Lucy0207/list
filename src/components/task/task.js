@@ -23,7 +23,7 @@ export default class Task extends React.Component {
             onChange={onToggleCompleted}
           />
           <label>
-            <span className="title">{todo.title}</span>
+            <span className="title">{todo.description}</span>
             <span className="description">
               {`${todo.timer.minutes
                 .toString()

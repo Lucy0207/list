@@ -8,11 +8,24 @@ import "./app.css";
 
 export default class App extends React.Component {
   maxId = 100;
+
+  createToDoItem = (description, newTodoMin, newTodoSec) => {
+    const minutes = parseInt(newTodoMin, 10) || 0;
+    const seconds = parseInt(newTodoSec, 10) || 0;
+
+    return {
+      description,
+      timer: {minutes, seconds},
+      date: new Date(),
+      completed: false,
+      editing: false,
+      isRunning: false,
+      id: this.maxId++,
+    };
+  };
   state = {
     todoData: [],
-    newTodo: "",
-    newTodoMin: "",
-    newTodoSec: "",
+
     filter: "All",
   };
 
@@ -24,43 +37,21 @@ export default class App extends React.Component {
     })
   }
 
-  handleNewTodoChange = (event) => {
-    this.setState({ newTodo: event.target.value });
-  };
 
-  handleNewTodoMinChange = (event) => {
-    this.setState({ newTodoMin: event.target.value });
-  };
 
-  handleNewTodoSecChange = (event) => {
-    this.setState({ newTodoSec: event.target.value });
-  };
-
-  handleNewTodoKeyDown = (event) => {
-    event.preventDefault();
-
-    const title = this.state.newTodo.trim();
-    const minutes = parseInt(this.state.newTodoMin, 10) || 0;
-    const seconds = parseInt(this.state.newTodoSec, 10) || 0;
-
-    if (title) {
-      const newTodo = {
-        title,
-        completed: false,
-        editing: false,
-        timer: { minutes, seconds },
-        date: new Date(),
-        isRunning: false,
-        id: this.maxId++,
-      };
-      this.setState({
-        todoData: [...this.state.todoData, newTodo],
-        newTodo: "",
-        newTodoMin: "",
-        newTodoSec: "",
+  addItem = (text, mins, secs) => {
+    if (text.trim() !== "") {
+      const newItem = this.createToDoItem(text, mins, secs);
+      this.setState(({ todoData }) => {
+        const newArr = [...todoData, newItem];
+        return {
+          todoData: newArr,
+        };
       });
     }
   };
+
+
 
   setFilter = (filter) => {
     this.setState({ filter });
@@ -124,17 +115,12 @@ export default class App extends React.Component {
   };
 
   render() {
-    const { todoData, newTodo, newTodoMin, newTodoSec, filter } = this.state;
+    const { todoData, filter } = this.state;
     return (
       <section className="todoapp">
         <Header
-          newTodo={newTodo}
-          newTodoMin={newTodoMin}
-          newTodoSec={newTodoSec}
-          onNewTodoChange={this.handleNewTodoChange}
-          onNewTodoMinChange={this.handleNewTodoMinChange}
-          onNewTodoSecChange={this.handleNewTodoSecChange}
-          onNewTodoKeyDown={this.handleNewTodoKeyDown}
+
+          onItemAdded = {this.addItem}
         />
         <section className="main">
           <TaskList
