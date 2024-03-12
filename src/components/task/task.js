@@ -10,12 +10,12 @@ export default class Task extends React.Component {
     const { todo, onToggleCompleted, onDeleted, startTimer, pauseTimer } =
       this.props;
 
-
+    const minutes = Math.floor(todo.timer / 60);
+    const seconds = todo.timer % 60;
 
     return (
       <>
         <div className="view">
-
           <input
             className="toggle"
             type="checkbox"
@@ -25,9 +25,7 @@ export default class Task extends React.Component {
           <label>
             <span className="title">{todo.description}</span>
             <span className="description">
-              {`${todo.timer.minutes
-                .toString()
-                .padStart(2, "0")}:${todo.timer.seconds
+              {`${minutes.toString().padStart(2, "0")}:${seconds
                 .toString()
                 .padStart(2, "0")}`}
               <button className="icon icon-play" onClick={startTimer}></button>

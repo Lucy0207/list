@@ -9,13 +9,12 @@ import "./app.css";
 export default class App extends React.Component {
   maxId = 100;
 
-  createToDoItem = (description, newTodoMin, newTodoSec) => {
-    const minutes = parseInt(newTodoMin, 10) || 0;
-    const seconds = parseInt(newTodoSec, 10) || 0;
+  createToDoItem = (description, totalSeconds) => {
+    const seconds = parseInt(totalSeconds, 10) || 0;
 
     return {
       description,
-      timer: {minutes, seconds},
+      timer: seconds,
       date: new Date(),
       completed: false,
       editing: false,
@@ -30,18 +29,16 @@ export default class App extends React.Component {
   };
 
   componentWillUnmount() {
-    this.state.todoData.forEach(todo => {
-      if(todo.timerInterval) {
-        clearInterval(todo.timerInterval)
+    this.state.todoData.forEach((todo) => {
+      if (todo.timerInterval) {
+        clearInterval(todo.timerInterval);
       }
-    })
+    });
   }
 
-
-
-  addItem = (text, mins, secs) => {
+  addItem = (text, secs) => {
     if (text.trim() !== "") {
-      const newItem = this.createToDoItem(text, mins, secs);
+      const newItem = this.createToDoItem(text, secs);
       this.setState(({ todoData }) => {
         const newArr = [...todoData, newItem];
         return {
@@ -50,8 +47,6 @@ export default class App extends React.Component {
       });
     }
   };
-
-
 
   setFilter = (filter) => {
     this.setState({ filter });
@@ -85,18 +80,11 @@ export default class App extends React.Component {
 
     const timerInterval = setInterval(() => {
       const currentTimer = updatedTodos[index].timer;
-      if (currentTimer.minutes === 0 && currentTimer.seconds === 0) {
+      if (currentTimer === 0) {
         clearInterval(timerInterval);
         updatedTodos[index].isRunning = false;
       } else {
-        let { minutes, seconds } = currentTimer;
-        if (seconds === 0) {
-          minutes -= 1;
-          seconds = 59;
-        } else {
-          seconds -= 1;
-        }
-        updatedTodos[index].timer = { minutes, seconds };
+        updatedTodos[index].timer -= 1;
       }
 
       this.setState({ todoData: updatedTodos });
@@ -118,10 +106,7 @@ export default class App extends React.Component {
     const { todoData, filter } = this.state;
     return (
       <section className="todoapp">
-        <Header
-
-          onItemAdded = {this.addItem}
-        />
+        <Header onItemAdded={this.addItem} />
         <section className="main">
           <TaskList
             todos={todoData}

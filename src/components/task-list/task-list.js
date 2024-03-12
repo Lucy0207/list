@@ -36,7 +36,6 @@ export default class TaskList extends React.Component {
       }
     });
     const finalTasks = filteredList.map((item, id) => {
-
       let classNames = "";
 
       if (item.editing) {
@@ -47,7 +46,6 @@ export default class TaskList extends React.Component {
 
       return (
         <li key={item.id} className={classNames}>
-
           <Task
             todo={item}
             onDeleted={() => onDeleted(id)}

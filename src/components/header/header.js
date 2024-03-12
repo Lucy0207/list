@@ -4,41 +4,45 @@ import PropTypes from "prop-types";
 import "./header.css";
 
 export default class Header extends React.Component {
-
   state = {
     description: "",
     newTodoMin: "",
     newTodoSec: "",
-  }
+    totalSeconds: "",
+  };
 
   handleNewTodoChange = (event) => {
     this.setState({ description: event.target.value });
   };
 
   handleNewTodoMinChange = (event) => {
-    this.setState({ newTodoMin: event.target.value });
+    const minutes = event.target.value;
+    const totalSeconds =
+      parseInt(minutes, 10) * 60 + (this.state.newTodoSec || 0);
+    this.setState({ newTodoMin: minutes, totalSeconds: totalSeconds });
   };
 
   handleNewTodoSecChange = (event) => {
-    this.setState({ newTodoSec: event.target.value });
+    const seconds = event.target.value;
+    const totalSeconds =
+      parseInt(seconds, 10) + (this.state.newTodoMin || 0) * 60;
+    this.setState({ newTodoSec: seconds, totalSeconds: totalSeconds });
   };
 
   onSubmit = (e) => {
     e.preventDefault();
-    this.props.onItemAdded(this.state.description, this.state.newTodoMin, this.state.newTodoMin);
+    this.props.onItemAdded(this.state.description, this.state.totalSeconds);
     this.setState({
       description: "",
       newTodoMin: "",
-      newTodoSec: ""
+      newTodoSec: "",
     });
   };
   render() {
-
     return (
       <header className="header">
         <h1>todos</h1>
         <form onSubmit={this.onSubmit} className="new-todo-form">
-
           <input
             className="new-todo"
             placeholder="What needs to be done?"
