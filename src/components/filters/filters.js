@@ -1,42 +1,36 @@
 import "./filters.css";
 
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-export default class Filters extends React.Component {
-  state = {
-    selectedFilter: "all",
-  };
+export default function Filters({ setFilter }) {
+  const [selectedFilter, setSelectedFilter] = useState("all");
 
-  handleFilterClick(filter) {
-    this.setState({ selectedFilter: filter });
-    this.props.setFilter(filter);
+  function handleFilterClick(filter) {
+    setSelectedFilter(filter);
+    setFilter(filter);
   }
 
-  render() {
-    const filterOptions = [
-      { value: "all", label: "All" },
-      { value: "active", label: "Active" },
-      { value: "completed", label: "Completed" },
-    ];
+  const filterOptions = [
+    { value: "all", label: "All" },
+    { value: "active", label: "Active" },
+    { value: "completed", label: "Completed" },
+  ];
 
-    return (
-      <ul className="filters">
-        {filterOptions.map((option) => (
-          <li key={option.value}>
-            <button
-              className={
-                this.state.selectedFilter === option.value ? "selected" : ""
-              }
-              onClick={() => this.handleFilterClick(option.value)}
-            >
-              {option.label}
-            </button>
-          </li>
-        ))}
-      </ul>
-    );
-  }
+  return (
+    <ul className="filters">
+      {filterOptions.map((option) => (
+        <li key={option.value}>
+          <button
+            className={selectedFilter === option.value ? "selected" : ""}
+            onClick={() => handleFilterClick(option.value)}
+          >
+            {option.label}
+          </button>
+        </li>
+      ))}
+    </ul>
+  );
 }
 
 Filters.propTypes = {

@@ -5,60 +5,47 @@ import Task from "../task/task";
 import "./task-list.css";
 import PropTypes from "prop-types";
 
-export default class TaskList extends React.Component {
-  componentDidMount() {
-    this.setState({ toDoItems: this.props.todos });
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.todos !== this.props.todos) {
-      this.setState({ toDoItems: this.props.todos });
+export default function TaskList({
+  todos,
+  filter,
+  onToggleCompleted,
+  onDeleted,
+  startTimer,
+  pauseTimer,
+}) {
+  const filteredList = todos.filter((todo) => {
+    if (filter === "active") {
+      return !todo.completed;
+    } else if (filter === "completed") {
+      return todo.completed;
+    } else {
+      return true;
     }
-  }
+  });
 
-  render() {
-    const {
-      todos,
-      filter,
-      onToggleCompleted,
-      onDeleted,
-      startTimer,
-      pauseTimer,
-    } = this.props;
+  const finalTasks = filteredList.map((item, id) => {
+    let classNames = "";
 
-    const filteredList = todos.filter((todo) => {
-      if (filter === "active") {
-        return !todo.completed;
-      } else if (filter === "completed") {
-        return todo.completed;
-      } else {
-        return true;
-      }
-    });
-    const finalTasks = filteredList.map((item, id) => {
-      let classNames = "";
+    if (item.editing) {
+      classNames = "editing";
+    } else if (item.completed) {
+      classNames = "completed";
+    }
 
-      if (item.editing) {
-        classNames = "editing";
-      } else if (item.completed) {
-        classNames = "completed";
-      }
+    return (
+      <li key={item.id} className={classNames}>
+        <Task
+          todo={item}
+          onDeleted={() => onDeleted(id)}
+          onToggleCompleted={() => onToggleCompleted(id)}
+          startTimer={() => startTimer(id)}
+          pauseTimer={() => pauseTimer(id)}
+        />
+      </li>
+    );
+  });
 
-      return (
-        <li key={item.id} className={classNames}>
-          <Task
-            todo={item}
-            onDeleted={() => onDeleted(id)}
-            onToggleCompleted={() => onToggleCompleted(id)}
-            startTimer={() => startTimer(id)}
-            pauseTimer={() => pauseTimer(id)}
-          />
-        </li>
-      );
-    });
-
-    return <ul className="todo-list">{finalTasks}</ul>;
-  }
+  return <ul className="todo-list">{finalTasks}</ul>;
 }
 
 TaskList.propTypes = {
