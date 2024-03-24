@@ -48,8 +48,16 @@ export default function App() {
   }
 
   function deleteItem(index) {
-    const updatedTodos = todoData.filter((_, i) => i !== index);
-    setTodoData(updatedTodos);
+    setTodoData((prevTodos) => {
+      const updatedTodos = [...prevTodos];
+
+      if (updatedTodos[index] && updatedTodos[index].timerInterval) {
+        clearInterval(updatedTodos[index].timerInterval);
+      }
+
+      updatedTodos.splice(index, 1);
+      return updatedTodos;
+    });
   }
 
   function clearComplete() {
@@ -71,11 +79,19 @@ export default function App() {
     updatedTodos[index].timerInterval = setInterval(() => {
       if (updatedTodos[index].timer > 0) {
         updatedTodos[index].timer--;
-        setTodoData([...updatedTodos]);
+        setTodoData((prevTodos) => {
+          const updatedTodos = [...prevTodos];
+
+          return updatedTodos;
+        });
       } else {
         clearInterval(updatedTodos[index].timerInterval);
         updatedTodos[index].isRunning = false;
-        setTodoData([...updatedTodos]);
+        setTodoData((prevTodos) => {
+          const updatedTodos = [...prevTodos];
+
+          return updatedTodos;
+        });
       }
     }, 1000);
   }

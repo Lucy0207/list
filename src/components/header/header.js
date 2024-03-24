@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 
 import "./header.css";
@@ -44,9 +44,10 @@ export default function Header({ onItemAdded }) {
           placeholder="What needs to be done?"
           value={description}
           onChange={handleNewTodoChange}
-          autoFocus
+         autoFocus
         />
         <input
+          ref={inputRef}
           className="new-todo-form__timer"
           type="number"
           placeholder="Min"
