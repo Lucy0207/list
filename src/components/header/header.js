@@ -47,7 +47,7 @@ export default function Header({ onItemAdded }) {
          autoFocus
         />
         <input
-          ref={inputRef}
+
           className="new-todo-form__timer"
           type="number"
           placeholder="Min"
